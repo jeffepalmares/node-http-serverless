@@ -3,6 +3,7 @@ import { HttpMethod, RouteExecutor } from '../types';
 
 export class RouteMetadata {
     private static rawRoutes: Array<RouteExecutor> = [];
+    private static routes: Array<RouteExecutor> = [];
     private static router: Map<string, RouteExecutor> = new Map();
 
     static register(targetClass: any, functionName: string, method: HttpMethod, route?: string): void {
@@ -14,15 +15,13 @@ export class RouteMetadata {
         routes.forEach((r) => {
             r.setController(controller, path);
             RouteMetadata.router.set(r.getRouteKey(), r);
+            RouteMetadata.routes.push(r);
             Logger.debug(`Registered Router: ${r.getRoute()}`, r);
         });
         Logger.debug('Controller Registered');
     }
 
-    public static getRouter() {
-        return RouteMetadata.router;
-    }
     public static getRoutes() {
-        return RouteMetadata.rawRoutes;
+        return RouteMetadata.routes;
     }
 }
