@@ -1,3 +1,4 @@
+import { ConflictError, HttpStatusCode } from 'node-http-helper';
 import { Service } from 'typedi';
 import { Controller, Post, Param, Query, Header, Body } from '../../src';
 import { LogicTestHelper } from './logic-helper';
@@ -84,5 +85,14 @@ export class PostControllerHelper {
     @Post('/validate-one-header')
     async getValidateOneHeader(@Header('age', { validateSchema: ValidateAgeSchema }) param: any) {
         return param;
+    }
+    @Post('/validate-custom-status-code', HttpStatusCode.OK)
+    async getValidateStatusCode() {
+        return 'ok';
+    }
+
+    @Post('/validate-error-staus', HttpStatusCode.OK)
+    async getValidateErrorStatus() {
+        throw new ConflictError('Conflict');
     }
 }

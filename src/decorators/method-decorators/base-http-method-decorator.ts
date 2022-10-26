@@ -24,7 +24,7 @@ export class BaseHttpMethodDecorator extends BaseDecorator {
         return { statusCode: status, data: result };
     }
 
-    static request(target: object, propertyKey: string, propDesc: PropertyDescriptor, method: HttpMethod, route?: string) {
+    static request(target: object, propertyKey: string, propDesc: PropertyDescriptor, method: HttpMethod, statusCode: number, route?: string) {
         const originalFunction: Function = propDesc.value;
         const originalTarget = target;
         const originalKey = propertyKey;
@@ -37,7 +37,7 @@ export class BaseHttpMethodDecorator extends BaseDecorator {
 
             const args = RequestProcessor.process(key, rawRequest);
 
-            return BaseHttpMethodDecorator.applyOriginal(this, originalFunction, args);
+            return BaseHttpMethodDecorator.applyOriginal(this, originalFunction, args, statusCode);
         };
         return propDesc;
     }

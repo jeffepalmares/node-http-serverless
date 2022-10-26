@@ -1,4 +1,5 @@
 import { HttpMethod } from './http-method';
+import { RouteParameter } from './route-parameter';
 export declare class RouteExecutor {
     private path;
     private route;
@@ -22,4 +23,5 @@ export declare class RouteExecutor {
     getFunctionName(): string;
     getRoute(): string;
     getRouteKey(): string;
+    getParameters(): Array<RouteParameter>;
 }

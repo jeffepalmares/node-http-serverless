@@ -1,38 +1,46 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { HttpGenericError, HttpStatusCode } from 'node-http-helper';
+import { HttpResponse } from '../serverless-handler/dtos';
+
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export abstract class BaseDecorator {
     private static defaultHandleError(err: unknown): any {
-        throw err;
+        if (err instanceof HttpGenericError) {
+            return new HttpResponse(err.statusCode, err.message, err);
+        }
+        return new HttpResponse(err['statusCode'] ?? HttpStatusCode.INTERNAL_SERVER_ERROR, null, err);
     }
 
-    private static defaultHandleSuccess(result: any): any {
-        return result;
+    private static defaultHandleSuccess(result: any, statusCode: number): HttpResponse {
+        statusCode = statusCode == HttpStatusCode.OK || !statusCode ? (result ? statusCode : HttpStatusCode.NO_CONTENT) : statusCode;
+        return new HttpResponse(statusCode, result);
     }
 
-    protected static applyOriginal(source: any, originalFunction: any, args: Array<unknown>, successHandle?: Function, errorHandle?: Function) {
+    protected static applyOriginal(source: any, originalFunction: any, args: Array<unknown>, statusCode: number) {
         try {
             const result = originalFunction.apply(source, args);
 
             if (result instanceof Promise) {
-                return BaseDecorator.handleAsyncFunction(result, successHandle, errorHandle);
+                return BaseDecorator.handleAsyncFunction(result, statusCode);
             }
 
-            return successHandle ? successHandle(result) : BaseDecorator.defaultHandleSuccess(result);
+            return BaseDecorator.defaultHandleSuccess(result, statusCode);
         } catch (err) {
-            return errorHandle ? errorHandle(err) : BaseDecorator.defaultHandleError(err);
+            return BaseDecorator.defaultHandleError(err);
         }
     }
 
-    protected static handleAsyncFunction(result: any, successHandle?: Function, errorHandle?: Function): Promise<unknown> {
+    protected static handleAsyncFunction(result: any, statusCode: number): Promise<unknown> {
         return new Promise((resolve) => {
             result
                 .then((funcResult: any) => {
-                    const resp = successHandle ? successHandle(funcResult) : BaseDecorator.defaultHandleSuccess(funcResult);
+                    const resp = BaseDecorator.defaultHandleSuccess(funcResult, statusCode);
                     resolve(resp);
                 })
                 .catch((err: Error | undefined) => {
-                    resolve(errorHandle ? errorHandle(err) : BaseDecorator.defaultHandleError(err));
+                    resolve(BaseDecorator.defaultHandleError(err));
                 });
         });
     }

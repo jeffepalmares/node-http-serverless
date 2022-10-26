@@ -30,7 +30,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(body).toBeDefined();
 
         expect(body.log).toBe('doneByLogic');
@@ -49,7 +49,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(body).toBeDefined();
         expect(body.log).toBe('doneByLogic');
         expect(body.params).toBeUndefined();
@@ -65,7 +65,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -81,7 +81,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -97,7 +97,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -113,7 +113,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(body).toBeDefined();
         expect(body.id).toBe('123');
         expect(body.pid).toBe('321');
@@ -131,7 +131,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(body).toBeDefined();
         expect(body.id).toBe('123');
         expect(body.pid).toBe('321');
@@ -149,7 +149,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(body).toBeDefined();
         expect(body.name).toBe('test');
         expect(body.age).toBe(12);
@@ -180,7 +180,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(response.body).toBe(12);
 
         expect(spy).toBeCalled();
@@ -196,7 +196,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(JSON.parse(response.body)).toMatchObject(mockData);
 
         expect(spy).toBeCalled();
@@ -241,7 +241,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(response.body).toBe(12);
 
         expect(spy).toBeCalled();
@@ -272,7 +272,7 @@ describe('[POST]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.CREATED);
         expect(JSON.parse(response.body)).toMatchObject(mockData);
 
         expect(spy).toBeCalled();
@@ -290,6 +290,33 @@ describe('[POST]', () => {
         expect(response).toBeDefined();
         expect(response.statusCode).toBe(HttpStatusCode.BAD_REQUEST);
 
+        expect(spy).toBeCalled();
+    });
+
+    it('POST /validate-custom-status-code', async () => {
+        const spy = jest.spyOn(PostControllerHelper.prototype, 'getValidateStatusCode');
+
+        event.path = '/users-post/validate-custom-status-code';
+
+        const func = ServerlessHandler.handler();
+        const response = (await func(event, {})) as AwsHttpResponse;
+
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.body).toBe('ok');
+        expect(spy).toBeCalled();
+    });
+
+    it('POST /validate-error-staus', async () => {
+        const spy = jest.spyOn(PostControllerHelper.prototype, 'getValidateErrorStatus');
+
+        event.path = '/users-post/validate-error-staus';
+
+        const func = ServerlessHandler.handler();
+        const response = (await func(event, {})) as AwsHttpResponse;
+
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(HttpStatusCode.CONFLICT);
         expect(spy).toBeCalled();
     });
 });

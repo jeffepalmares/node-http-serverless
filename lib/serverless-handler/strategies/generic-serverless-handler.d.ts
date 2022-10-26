@@ -7,5 +7,8 @@ export declare abstract class GenericServerlessHandler<E, C> extends DefaultErro
     constructor(Injector: IDependencyInjector);
     applyCall(p0: E, p1: C, start: Date, dbConnection?: Function): Promise<unknown>;
     private findRouteByRequest;
+    private findRouteByPath;
+    private findRouteByRegex;
+    private loadPathParameters;
     private conectDb;
 }

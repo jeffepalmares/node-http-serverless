@@ -31,7 +31,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(body).toBeDefined();
 
         expect(body.log).toBe('doneByLogic');
@@ -50,7 +50,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(body).toBeDefined();
         expect(body.log).toBe('doneByLogic');
         expect(body.params).toBeUndefined();
@@ -66,7 +66,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -82,7 +82,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -98,7 +98,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(response.body).toBeDefined();
         expect(response.body).toBe('123');
 
@@ -114,7 +114,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(body).toBeDefined();
         expect(body.id).toBe('123');
         expect(body.pid).toBe('321');
@@ -132,7 +132,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(body).toBeDefined();
         expect(body.id).toBe('123');
         expect(body.pid).toBe('321');
@@ -150,7 +150,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
         const body = JSON.parse(response.body);
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(body).toBeDefined();
         expect(body.name).toBe('test');
         expect(body.age).toBe(12);
@@ -181,7 +181,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(response.body).toBe(12);
 
         expect(spy).toBeCalled();
@@ -197,7 +197,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(JSON.parse(response.body)).toMatchObject(mockData);
 
         expect(spy).toBeCalled();
@@ -242,7 +242,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(response.body).toBe(12);
 
         expect(spy).toBeCalled();
@@ -273,7 +273,7 @@ describe('[DELETE]', () => {
         const response = (await func(event, {})) as AwsHttpResponse;
 
         expect(response).toBeDefined();
-        expect(response.statusCode).toBe(HttpStatusCode.OK);
+        expect(response.statusCode).toBe(HttpStatusCode.NO_CONTENT);
         expect(JSON.parse(response.body)).toMatchObject(mockData);
 
         expect(spy).toBeCalled();
