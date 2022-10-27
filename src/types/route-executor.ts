@@ -55,7 +55,7 @@ export class RouteExecutor {
     private buildUriRegex(): void {
         let path = this.path || '';
         if (path == '') {
-            this.uriRegexKey = `${this.controllerPath}((/|(\\?.*$))?)$`;
+            this.uriRegexKey = `^${this.controllerPath}((/|(\\?.*$))?)$`;
             this.uriRegex = new RegExp(this.uriRegexKey);
             this.route = `${this.controllerPath}${this.rawPath}`;
             return;

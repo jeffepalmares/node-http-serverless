@@ -83,6 +83,13 @@ describe('[RouteRegexUri]', () => {
     });
 
     it('Should validate prefix', () => {
+        const exmpRoute = new RouteExecutor(exampleController, httpMethod, '', funcName);
+        exmpRoute.setController(null, '/example');
+        expect('api/v1/example'.match(exmpRoute.getUriRegex())).toBeFalsy();
+        expect('/api/v1/example'.match(exmpRoute.getUriRegex())).toBeFalsy();
+        expect('/v1/example'.match(exmpRoute.getUriRegex())).toBeFalsy();
+        expect('/v1/example/'.match(exmpRoute.getUriRegex())).toBeFalsy();
+        expect('/example'.match(exmpRoute.getUriRegex())).toBeTruthy();
         expect('/api/v1/examples/123'.match(byIdProdIdSupId.getUriRegex())).toBeFalsy();
     });
 });
