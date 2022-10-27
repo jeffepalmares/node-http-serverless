@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'local';
 import { HttpStatusCode } from 'node-http-helper';
 import 'reflect-metadata';
 import { Container } from 'typedi';

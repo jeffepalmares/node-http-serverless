@@ -6,6 +6,7 @@ import { AwsServerlessHandler, GcpServerlessHandler } from './strategies';
 import { GenericServerlessHandler } from './strategies/generic-serverless-handler';
 import { ServerlessHandlerOptions, ServerlessProvider } from './types';
 import { HttpStatusCode } from 'node-http-helper';
+import { RouteMetadata } from '../core';
 
 class AServerlessHandler {
     private static provider: ServerlessProvider = ServerlessProvider.AWS;
@@ -63,6 +64,9 @@ class AServerlessHandler {
      * @returns
      */
     public handler(options?: ServerlessHandlerOptions): (p0: unknown, p1: unknown, callback?: Function) => unknown {
+        let routes = ``;
+        RouteMetadata.getRoutes().forEach((r) => (routes = `${routes}  ${r.getMethod().toUpperCase()} - ${r.getRoute()}\n`));
+        Logger.info(routes);
         return async (p0: unknown, p1: unknown, callback?: Function) =>
             await StorageContext.run(async () => {
                 const start = new Date();

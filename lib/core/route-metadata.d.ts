@@ -6,4 +6,5 @@ export declare class RouteMetadata {
     static register(targetClass: any, functionName: string, method: HttpMethod, route?: string): void;
     static registerController(controller: any, path: string): void;
     static getRoutes(): RouteExecutor[];
+    static setPrefix(prefix: string): RouteExecutor[];
 }

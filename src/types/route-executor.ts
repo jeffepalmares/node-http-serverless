@@ -60,7 +60,7 @@ export class RouteExecutor {
         }
 
         path = RegexUtils.replace(AppConstants.PARAMETER_REGEX_HOLDER, path, AppConstants.PARAMETER_REGEX, true) ?? path;
-        this.uriRegexKey = `${this.controllerPath}${path}$`;
+        this.uriRegexKey = `^${this.controllerPath}${path}$`;
         this.uriRegex = new RegExp(this.uriRegexKey);
         this.route = `${this.controllerPath}${this.route}`;
     }

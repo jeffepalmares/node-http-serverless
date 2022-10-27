@@ -24,4 +24,8 @@ export class RouteMetadata {
     public static getRoutes() {
         return RouteMetadata.routes;
     }
+
+    public static setPrefix(prefix: string) {
+        return RouteMetadata.routes;
+    }
 }

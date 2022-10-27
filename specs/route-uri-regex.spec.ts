@@ -81,4 +81,8 @@ describe('[RouteRegexUri]', () => {
         prodIdSupList.forEach((u) => expect(execute(u, byIdProdIdSupId.getUriRegex())).toBeFalsy());
         prodIdSupIdList.forEach((u) => expect(execute(u, byIdProdIdSupId.getUriRegex())).toBeTruthy());
     });
+
+    it('Should validate prefix', () => {
+        expect('/api/v1/examples/123'.match(byIdProdIdSupId.getUriRegex())).toBeFalsy();
+    });
 });
