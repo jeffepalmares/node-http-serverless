@@ -19,6 +19,8 @@ export class AwsServerlessHandler extends GenericServerlessHandler<AwsHttpEvent,
     }
 
     protected getRawRequest(event: AwsHttpEvent, context: AwsContext): InputRequest {
+        event = event ?? {};
+        event.headers = event.headers ?? {};
         return {
             requestId: (event.headers[LoggerConstants.CorrelationIdHeader] ?? context.awsRequestId) as string,
             method: event.httpMethod as HttpMethod,
