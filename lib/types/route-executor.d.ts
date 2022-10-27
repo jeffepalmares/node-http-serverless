@@ -2,6 +2,7 @@ import { HttpMethod } from './http-method';
 import { RouteParameter } from './route-parameter';
 export declare class RouteExecutor {
     private path;
+    private rawPath;
     private route;
     private controllerName;
     private controllerPath;

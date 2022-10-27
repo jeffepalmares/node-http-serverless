@@ -6,6 +6,7 @@ import { RouteParameter } from './route-parameter';
 
 export class RouteExecutor {
     private path: string;
+    private rawPath: string;
     private route: string;
     private controllerName: string;
     private controllerPath: string;
@@ -20,6 +21,7 @@ export class RouteExecutor {
         this.controllerName = controllerName;
         this.method = method;
         this.functionName = functionName;
+        this.rawPath = route ?? '';
         this.generateRoute(route);
     }
 
@@ -55,14 +57,14 @@ export class RouteExecutor {
         if (path == '') {
             this.uriRegexKey = `${this.controllerPath}((/|(\\?.*$))?)$`;
             this.uriRegex = new RegExp(this.uriRegexKey);
-            this.route = `${this.controllerPath}${this.route}`;
+            this.route = `${this.controllerPath}${this.rawPath}`;
             return;
         }
 
         path = RegexUtils.replace(AppConstants.PARAMETER_REGEX_HOLDER, path, AppConstants.PARAMETER_REGEX, true) ?? path;
         this.uriRegexKey = `^${this.controllerPath}${path}$`;
         this.uriRegex = new RegExp(this.uriRegexKey);
-        this.route = `${this.controllerPath}${this.route}`;
+        this.route = `${this.controllerPath}${this.rawPath}`;
     }
 
     setController(controller: any, controllerPath: string) {
