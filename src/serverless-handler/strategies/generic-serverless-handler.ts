@@ -1,7 +1,7 @@
 import { IDependencyInjector, RouteExecutor } from '../../types';
 import { Logger } from 'node-smart-log';
 import { InputRequest } from '../dtos';
-import { RouteMetadata } from '../../core';
+import { RouteInternalController, RouteMetadata } from '../../core';
 import { DefaultErrorSuccessResponseHandler } from './default-error-success-handler';
 import { NotFoundError } from 'node-http-helper';
 
@@ -23,7 +23,7 @@ export abstract class GenericServerlessHandler<E, C> extends DefaultErrorSuccess
             await this.conectDb(dbConnection);
 
             Logger.debug(`Getting ${route.getController().name} instance`);
-            const controller = this.Injector.get(route.getController());
+            const controller = this.getController(route);
 
             Logger.debug(`Invoking ${route.getController().name}.${route.getFunctionName()}`);
             const response = await controller[route.getFunctionName()](inputRequest);
@@ -34,6 +34,14 @@ export abstract class GenericServerlessHandler<E, C> extends DefaultErrorSuccess
             const httpResponse = this.defaultHandlerError(err);
             this.logResponse(inputRequest, httpResponse, start);
             return this.handleHttpResponse(httpResponse);
+        }
+    }
+
+    private getController(route: RouteExecutor) {
+        if (route.getControllerName() == 'RouteInternalController') {
+            return RouteInternalController.instance;
+        } else {
+            return this.Injector.get(route.getController());
         }
     }
 

@@ -6,6 +6,7 @@ export declare abstract class GenericServerlessHandler<E, C> extends DefaultErro
     protected Injector: IDependencyInjector;
     constructor(Injector: IDependencyInjector);
     applyCall(p0: E, p1: C, start: Date, dbConnection?: Function): Promise<unknown>;
+    private getController;
     private findRouteByRequest;
     private findRouteByPath;
     private findRouteByRegex;

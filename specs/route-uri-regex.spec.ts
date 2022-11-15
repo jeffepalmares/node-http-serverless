@@ -4,7 +4,7 @@ import { RouteExecutor, RouteParameter } from '../src/types';
 const exampleController = 'ExampleController';
 const httpMethod = 'GET';
 const funcName = 'func';
-const idList = ['/examples/123', '/examples/abc', '/examples/test@tes.com', '/examples/.test.com-fdsfdsfds'];
+const idList = ['/examples/123', '/examples/abc', '/examples/test@tes.com', '/examples/test+2-1#r@tes.com', '/examples/.test.com-fdsfdsfds'];
 const prodList = ['/examples/123/products', '/examples/abc/products', '/examples/test@tes.com/products', '/examples/.test.com-fdsfdsfds/products'];
 const prodIdList = ['/examples/123/products/123', '/examples/abc/products/abc', '/examples/test@tes.com/products/test@tes.com', '/examples/.test.com-fdsfdsfds/products/.test.com-fdsfdsfds'];
 const prodIdSupList = [
