@@ -8,7 +8,7 @@ import { HttpResponse } from '../serverless-handler/dtos';
 export abstract class BaseDecorator {
     private static defaultHandleError(err: unknown): any {
         if (err instanceof HttpGenericError) {
-            return new HttpResponse(err.statusCode, err.message, err);
+            return new HttpResponse(err.statusCode, err.message, err['originData'] ?? err.data);
         }
         return new HttpResponse(err['statusCode'] ?? HttpStatusCode.INTERNAL_SERVER_ERROR, null, err);
     }

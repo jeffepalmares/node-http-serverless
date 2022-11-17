@@ -5,6 +5,7 @@
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
     "scripts": {
+        "install": "pnpm install",
         "test": "./node_modules/.bin/jest --ci --verbose --runInBand --detectOpenHandles --collectCoverage=true"
     },
     "keywords": [],

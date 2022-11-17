@@ -6,7 +6,8 @@ import { AwsServerlessHandler, GcpServerlessHandler } from './strategies';
 import { GenericServerlessHandler } from './strategies/generic-serverless-handler';
 import { ServerlessHandlerOptions, ServerlessProvider } from './types';
 import { HttpStatusCode } from 'node-http-helper';
-import { RouteInternalController, RouteMetadata } from '../core';
+
+import { RouteInternalController } from '../documentation';
 
 class AServerlessHandler {
     private static provider: ServerlessProvider = ServerlessProvider.AWS;
@@ -47,6 +48,7 @@ class AServerlessHandler {
      */
     public setDependencyInjector(injector: IDependencyInjector) {
         AServerlessHandler.injector = injector;
+        injector.set(RouteInternalController, RouteInternalController.instance);
     }
 
     /**
@@ -64,9 +66,6 @@ class AServerlessHandler {
      * @returns
      */
     public handler(options?: ServerlessHandlerOptions): (p0: unknown, p1: unknown, callback?: Function) => unknown {
-        let routes = ``;
-        RouteMetadata.register(RouteInternalController.prototype, 'getUris', 'GET', '/sd');
-        RouteMetadata.registerController(RouteInternalController, '');
         return async (p0: unknown, p1: unknown, callback?: Function) =>
             await StorageContext.run(async () => {
                 const start = new Date();

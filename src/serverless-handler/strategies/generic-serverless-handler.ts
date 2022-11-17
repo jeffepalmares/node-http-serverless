@@ -1,7 +1,7 @@
 import { IDependencyInjector, RouteExecutor } from '../../types';
 import { Logger } from 'node-smart-log';
 import { InputRequest } from '../dtos';
-import { RouteInternalController, RouteMetadata } from '../../core';
+import { RouteMetadata } from '../../core';
 import { DefaultErrorSuccessResponseHandler } from './default-error-success-handler';
 import { NotFoundError } from 'node-http-helper';
 
@@ -38,11 +38,7 @@ export abstract class GenericServerlessHandler<E, C> extends DefaultErrorSuccess
     }
 
     private getController(route: RouteExecutor) {
-        if (route.getControllerName() == 'RouteInternalController') {
-            return RouteInternalController.instance;
-        } else {
-            return this.Injector.get(route.getController());
-        }
+        return this.Injector.get(route.getController());
     }
 
     private findRouteByRequest(inputRequest: InputRequest) {
